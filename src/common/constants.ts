@@ -1,5 +1,6 @@
 export enum Microservices {
   PRODUCT_SERVICE = 'products',
+  ORDER_SERVICE = 'orders',
 }
 
 export enum ProductTCP {
@@ -8,4 +9,12 @@ export enum ProductTCP {
   FIND_ONE = 'FIND_ONE_PRODUCT',
   UPDATE = 'UPDATE_PRODUCT',
   DELETE = 'DELETE_PRODUCT',
+}
+
+export enum OrderTCP {
+  CREATE = 'CREATE_ORDER',
+  FIND_ALL = 'FIND_ALL_ORDERS',
+  FIND_ALL_BY_STATUS = 'FIND_ALL_ORDERS_BY_STATUS',
+  FIND_ONE = 'FIND_ONE_ORDER',
+  CHANGE_ORDER_STATUS = 'CHANGE_ORDER_STATUS',
 }
