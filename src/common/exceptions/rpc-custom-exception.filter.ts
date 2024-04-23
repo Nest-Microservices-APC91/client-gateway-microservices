@@ -12,6 +12,17 @@ export class RpcCustomExceptionFilter implements ExceptionFilter {
 
     const rpcError = exception.getError();
 
+    //si alguna microservices esta caido
+    // Aca se puede disparar alguna sistema de notificación
+    if (rpcError.toString().includes('Empty response')) {
+      return resp.status(500).json({
+        status: 500,
+        message: rpcError
+          .toString()
+          .substring(0, rpcError.toString().indexOf('(') - 1),
+      });
+    }
+
     if (
       typeof rpcError === 'object' && // Si rpcError es un objeto
       'status' in rpcError && // Si status exite in rpcError
