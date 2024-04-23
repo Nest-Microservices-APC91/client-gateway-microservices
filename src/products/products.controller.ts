@@ -15,18 +15,18 @@ import { catchError } from 'rxjs';
 
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Microservices, PaginationDto, ProductTCP } from '../common';
+import { NATS_SERVICE, PaginationDto, Products } from '../common';
 
 @Controller('products')
 export class ProductsController {
   constructor(
-    @Inject(Microservices.PRODUCT_SERVICE)
-    private readonly productClient: ClientProxy,
+    @Inject(NATS_SERVICE)
+    private readonly client: ClientProxy,
   ) {}
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
-    return this.productClient.send(ProductTCP.CREATE, createProductDto).pipe(
+    return this.client.send(Products.CREATE, createProductDto).pipe(
       catchError((err) => {
         throw new RpcException(err);
       }),
@@ -35,7 +35,7 @@ export class ProductsController {
 
   @Get()
   findAll(@Query() paginationDto: PaginationDto) {
-    return this.productClient.send(ProductTCP.FIND_ALL, paginationDto).pipe(
+    return this.client.send(Products.FIND_ALL, paginationDto).pipe(
       catchError((err) => {
         throw new RpcException(err);
       }),
@@ -44,7 +44,7 @@ export class ProductsController {
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productClient.send(ProductTCP.FIND_ONE, { id }).pipe(
+    return this.client.send(Products.FIND_ONE, { id }).pipe(
       catchError((err) => {
         throw new RpcException(err);
       }),
@@ -56,8 +56,8 @@ export class ProductsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    return this.productClient
-      .send(ProductTCP.UPDATE, {
+    return this.client
+      .send(Products.UPDATE, {
         id,
         ...updateProductDto,
       })
@@ -70,7 +70,7 @@ export class ProductsController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.productClient.send(ProductTCP.DELETE, { id }).pipe(
+    return this.client.send(Products.DELETE, { id }).pipe(
       catchError((err) => {
         throw new RpcException(err);
       }),
