@@ -13,7 +13,6 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError } from 'rxjs';
 
 import { CreateOrderDto } from './dto/create-order.dto';
-//import { UpdateOrderDto } from './dto/update-order.dto';
 import { NATS_SERVICE, Orders, PaginationDto } from '../common';
 import { OrderPaginationDto } from './dto/order-pagination.dto';
 import { StatusDto } from './dto/status.dto';
